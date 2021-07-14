@@ -1,216 +1,221 @@
 # Week 15 Learning Objectives
 
-1. Recognize a React Class Component
+1.  Recognize a React Class Component
 
-   A Class component is defined with the keyword `class` it extends the
-   `Component` class and always has a `render`.
-
-   ```js
-   import React from 'react';
-
-   class ClassComponent extends React.Component {
-     render() {
-       return <div>Class Component</div>;
-     }
-   }
-   ```
-
-2. Convert the use of component props in a Class Component to a Function
-   Component
-
-   ```js
-   import React from 'react';
-
-   class ClassComponent extends React.Component {
-     render() {
-       return (
-         <div>
-           <h1>{this.props.title}</h1>
-         </div>
-       );
-     }
-   }
-   ```
-
-   ```js
-   function FunctionComponent(props) {
-     return (
-       <div>
-         <h1>{props.title}</h1>
-       </div>
-     );
-   }
-   ```
-
-3. Convert the use of component state in a Class Component to a Function
-   Component using useState
-
-   ```js
-   import React from 'react';
-
-   class ClassComponent extends React.Component {
-     constructor(props) {
-       super(props); // must be called if creating a constructor method
-
-       // Initialize the component state object
-       this.state = {
-         count: 0
-       };
-     }
-
-     render() {
-       return (
-         <>
-           <h1>{this.props.title}</h1>
-           <div>{count}</div>
-           <button
-             onClick={() =>
-               this.setState((state) => ({ count: state.count + 1 }))
-             }
-           >
-             Increment
-           </button>
-         </>
-       );
-     }
-   }
-   ```
-
-   ```js
-   import { useState } from 'react';
-
-   function FunctionComponent({ title }) {
-     const [count, setCount] = useState(0);
-
-     return (
-       <>
-         <h1>{title}</h1>
-         <div>{count}</div>
-         <button onClick={() => setCount(count + 1)}>Increment</button>
-       </>
-     );
-   }
-   ```
-
-4. Understand what lifecycle methods are, the types of lifecycle methods, and
-   when they are called.
-
-   Lifecycle methods of a Class Component are methods that will be invoked after
-   the rendering of a component. There are three types of lifecycle methods.
-   `componentDidMount` will only run once, after the component's first render.
-   `componentDidUpdate` will run after every render that isn't the first render.
-   `componentWillUnmount` will run right before the component is removed from
-   the component tree. The `useEffect` hook can be used to imitate the behavior
-   of the lifecycle methods for a Class Component.
-
-5. Convert the use of lifecycle methods in a Class Component to a Function Component using useEffect
-
-   ```js
-   import React from 'react';
-
-   class ClassComponent extends React.Component {
-     constructor(props) {
-       super(props); // must be called if creating a constructor method
-
-       // Initialize the component state object
-       this.state = {
-         count: 0
-       };
-     }
-
-     componentDidMount() {
-       setTimeout(() => {
-         this.setState({ count: 0 });
-       }, 1000);
-     }
-
-     componentDidUpdate(prevProps, prevState) {
-       if (prevState.count !== this.state.count) {
-         console.log('hello world!');
-       }
-     }
-
-     componentWillUnmount() {
-       console.log('cleanup');
-     }
-
-     render() {
-       return (
-         <>
-           <div>{count}</div>
-           <button
-             onClick={() =>
-               this.setState((state) => ({ count: state.count + 1 }))
-             }
-           >
-             Increment
-           </button>
-         </>
-       );
-     }
-   }
-   ```
-
-   ```js
-   import { useState, useEffect } from 'react';
-
-   function FunctionComponent({ title }) {
-     const [count, setCount] = useState(0);
-
-     useEffect(() => {
-       setTimeout(() => {
-         setCount(0);
-       }, 1000);
-       return () => console.log('cleanup');
-     }, []);
-
-     useEffect(() => {
-       console.log('hello world!');
-     }, [count]);
-
-     return (
-       <>
-         <h1>{title}</h1>
-         <div>{count}</div>
-         <button onClick={() => setCount(count + 1)}>Increment</button>
-       </>
-     );
-   }
-   ```
-
-6. Describe the Redux data cycle.
-
-   An `action` object is dispatched to the reducer using an `action creator`
-   function. That action is required to have a type key/value pair and an
-   optional payload. Based on that actions type, the reducer will decide how
-   state should be updated inside the `store` and then pass it to any component
-   that has subscribed to it.
-
-7. Evaluate when it's appropriate to use Redux.
-
-   - You have large amounts of application state that are needed in many places in the app
-   - The app state is updated frequently over time
-   - The logic to update that state may be complex
-   - The app has a medium or large-sized codebase, and might be worked on by
-     many people
-
-8. Configure a React application to use Redux.
-
-`/store/index.js`
+    A Class component is defined with the keyword `class` it extends the
+    `Component` class and always has a `render`.
 
     ```js
-    import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+    import React from 'react';
+
+    class ClassComponent extends React.Component {
+      render() {
+        return <div>Class Component</div>;
+      }
+    }
+    ```
+
+2.  Convert the use of component props in a Class Component to a Function
+    Component
+
+    ```js
+    import React from 'react';
+
+    class ClassComponent extends React.Component {
+      render() {
+        return (
+          <div>
+            <h1>{this.props.title}</h1>
+          </div>
+        );
+      }
+    }
+    ```
+
+    ```js
+    function FunctionComponent(props) {
+      return (
+        <div>
+          <h1>{props.title}</h1>
+        </div>
+      );
+    }
+    ```
+
+3.  Convert the use of component state in a Class Component to a Function
+    Component using useState
+
+    ```js
+    import React from 'react';
+
+    class ClassComponent extends React.Component {
+      constructor(props) {
+        super(props); // must be called if creating a constructor method
+
+        // Initialize the component state object
+        this.state = {
+          count: 0
+        };
+      }
+
+      render() {
+        return (
+          <>
+            <h1>{this.props.title}</h1>
+            <div>{count}</div>
+            <button
+              onClick={() =>
+                this.setState((state) => ({ count: state.count + 1 }))
+              }
+            >
+              Increment
+            </button>
+          </>
+        );
+      }
+    }
+    ```
+
+    ```js
+    import { useState } from 'react';
+
+    function FunctionComponent({ title }) {
+      const [count, setCount] = useState(0);
+
+      return (
+        <>
+          <h1>{title}</h1>
+          <div>{count}</div>
+          <button onClick={() => setCount(count + 1)}>Increment</button>
+        </>
+      );
+    }
+    ```
+
+4.  Understand what lifecycle methods are, the types of lifecycle methods, and
+    when they are called.
+
+    Lifecycle methods of a Class Component are methods that will be invoked after
+    the rendering of a component. There are three types of lifecycle methods.
+    `componentDidMount` will only run once, after the component's first render.
+    `componentDidUpdate` will run after every render that isn't the first render.
+    `componentWillUnmount` will run right before the component is removed from
+    the component tree. The `useEffect` hook can be used to imitate the behavior
+    of the lifecycle methods for a Class Component.
+
+5.  Convert the use of lifecycle methods in a Class Component to a Function Component using useEffect
+
+    ```js
+    import React from 'react';
+
+    class ClassComponent extends React.Component {
+      constructor(props) {
+        super(props); // must be called if creating a constructor method
+
+        // Initialize the component state object
+        this.state = {
+          count: 0
+        };
+      }
+
+      componentDidMount() {
+        setTimeout(() => {
+          this.setState({ count: 0 });
+        }, 1000);
+      }
+
+      componentDidUpdate(prevProps, prevState) {
+        if (prevState.count !== this.state.count) {
+          console.log('hello world!');
+        }
+      }
+
+      componentWillUnmount() {
+        console.log('cleanup');
+      }
+
+      render() {
+        return (
+          <>
+            <div>{count}</div>
+            <button
+              onClick={() =>
+                this.setState((state) => ({ count: state.count + 1 }))
+              }
+            >
+              Increment
+            </button>
+          </>
+        );
+      }
+    }
+    ```
+
+    ```js
+    import { useState, useEffect } from 'react';
+
+    function FunctionComponent({ title }) {
+      const [count, setCount] = useState(0);
+
+      useEffect(() => {
+        setTimeout(() => {
+          setCount(0);
+        }, 1000);
+        return () => console.log('cleanup');
+      }, []);
+
+      useEffect(() => {
+        console.log('hello world!');
+      }, [count]);
+
+      return (
+        <>
+          <h1>{title}</h1>
+          <div>{count}</div>
+          <button onClick={() => setCount(count + 1)}>Increment</button>
+        </>
+      );
+    }
+    ```
+
+6.  Describe the Redux data cycle.
+
+    An `action` object is dispatched to the reducer using an `action creator`
+    function. That action is required to have a type key/value pair and an
+    optional payload. Based on that actions type, the reducer will decide how
+    state should be updated inside the `store` and then pass it to any component
+    that has subscribed to it.
+
+7.  Evaluate when it's appropriate to use Redux.
+
+    - You have large amounts of application state that are needed in many places in the app
+    - The app state is updated frequently over time
+    - The logic to update that state may be complex
+    - The app has a medium or large-sized codebase, and might be worked on by
+      many people
+
+8.  Configure a React application to use Redux.
+
+    `/store/index.js`
+
+    ```js
+    import {
+      createStore,
+      applyMiddleware,
+      compose,
+      combineReducers
+    } from 'redux';
     import articleReducer from './articleReducer';
     import fruitReducer from './fruitReducer';
     /* combineReducers turns all the reducer functions into one big reducer function
-    */
+     */
     /* this is the most important part of this file. you will add your reducers here
     to work with your components. you are creating one big reducer */
     const rootReducer = combineReducers({
-    //add reducer
-    // this key should be named article
-    articleState: articleReducer,
-    fruitState: fruitReducer
+      //add reducer
+      // this key should be named article
+      articleState: articleReducer,
+      fruitState: fruitReducer
     });
 
     let enhancer;
@@ -222,15 +227,14 @@
     /* process.env.NODE_ENV has 3 settings:
     1. running npm start makes process.env.NODE_ENV ='development`
     2. running npm test makes process.env.NODE_ENV = 'test'
-    3. running npm run build makes process.env.NODE_ENV = 'production' which you
-      will use with heroku
-    */
+    3. running npm run build makes process.env.NODE_ENV = 'production'
+    which you will use with heroku */
     /* window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true }) along with the chrome extension for redux devtools will set up your Redux DevTools in the browser */
     if (process.env.NODE_ENV !== 'production') {
-    const logger = require('redux-logger').default;
-    const composeEnhancers =
+      const logger = require('redux-logger').default;
+      const composeEnhancers =
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true }) || compose;
-    enhancer = composeEnhancers(applyMiddleware(logger));
+      enhancer = composeEnhancers(applyMiddleware(logger));
     }
 
     /* createStore creates a store object literal {} */
@@ -239,7 +243,7 @@
 
     /*this is the variable you will use in your root index.js to give Redux store access to the full application */
     const configureStore = (preloadedState) => {
-        return createStore(rootReducer, preloadedState, enhancer);
+      return createStore(rootReducer, preloadedState, enhancer);
     };
 
     export default configureStore;
@@ -248,26 +252,26 @@
     Root `index.js`
 
     ```js
-        import React from 'react';
-        import ReactDOM from 'react-dom';
-        import { BrowserRouter } from 'react-router-dom';
-        import { Provider } from 'react-redux';
-        import App from './App';
-        import configureStore from './store';
-        import './index.css';
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import { BrowserRouter } from 'react-router-dom';
+    import { Provider } from 'react-redux';
+    import App from './App';
+    import configureStore from './store';
+    import './index.css';
 
-        const store = configureStore();
+    const store = configureStore();
 
-        ReactDOM.render(
-        <React.StrictMode>
-            <Provider store={store}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </Provider>
-        </React.StrictMode>,
-        document.getElementById('root')
-        );
+    ReactDOM.render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </React.StrictMode>,
+      document.getElementById('root')
+    );
     ```
 
 9.  Configure Redux to use the browser extension for Redux development tools.
@@ -417,8 +421,8 @@
         }
     ```
 
-After you have placed the store and session on the window, you can then test
-your action creators and Redux methods in your console.
+    After you have placed the store and session on the window, you can then test
+    your action creators and Redux methods in your console.
 
 16. Use debugging tools to determine when an action is called and a reducer
     updates state.
