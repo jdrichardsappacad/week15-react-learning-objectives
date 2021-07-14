@@ -229,7 +229,8 @@
     2. running npm test makes process.env.NODE_ENV = 'test'
     3. running npm run build makes process.env.NODE_ENV = 'production'
     which you will use with heroku */
-    /* window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true }) along with the chrome extension for redux devtools will set up your Redux DevTools in the browser */
+    /* window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true }) along with
+     the chrome extension for redux devtools will set up your Redux DevTools in the browser */
     if (process.env.NODE_ENV !== 'production') {
       const logger = require('redux-logger').default;
       const composeEnhancers =
