@@ -220,7 +220,8 @@
 
     let enhancer;
 
-    /* enhancer allows you to alter the store and add functionality such as redux devtools, logger (similar to morgan) middleware */
+    /* enhancer allows you to alter the store and add functionality such as 
+    redux devtools, logger (similar to morgan) middleware */
 
     /* compose gives you the ability to add more than one enhancer to the store */
     /* env comes automatically in create-react-app */
